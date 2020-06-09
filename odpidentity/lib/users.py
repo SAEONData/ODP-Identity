@@ -236,8 +236,28 @@ def check_password_complexity(password):
     :param password: the input plain-text password
     :return: boolean
     """
-    # todo...
-    valid = len(password) >= 8
-    valid = valid and re.search(r'[a-zA-Z]', password) is not None
-    valid = valid and re.search(r'[0-9]', password) is not None
-    return valid
+
+    length_check = False
+    symbol_check = False
+
+    #Check if the password is long enough
+    if len(password) >= 8:
+        length_check = True
+
+    #Check if the password has an Uppercase letter
+    uppercase_check = re.search(r"[A-Z]", password)
+
+    #Check if the password has numbers
+    numeric_check = re.search(r"\d", password)
+
+    #Check if the password has lowercase letter
+    lowercase_check = re.search(r"[a-z]", password)
+
+    #Check for symbols
+    if re.search(r"[!=;:?>@<#$%&'()*+,-./[\\\]^_`{|}~+']", password):
+        symbol_check = True
+
+    if (length_check and uppercase_check and numeric_check and lowercase_check and symbol_check):
+        return True
+    else:
+        return False
