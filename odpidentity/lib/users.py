@@ -117,7 +117,7 @@ def validate_user_signup(email, password):
     if user:
         raise x.ODPEmailInUse
 
-    if not check_password_complexity(password):
+    if not check_password_complexity(email, password):
         raise x.ODPPasswordComplexityError
 
 
@@ -160,7 +160,7 @@ def validate_password_reset(email, password):
     if not user:
         raise x.ODPUserNotFound
 
-    if not check_password_complexity(password):
+    if not check_password_complexity(email, password):
         raise x.ODPPasswordComplexityError
 
     return user
@@ -228,36 +228,32 @@ def update_user_password(user, password):
     db_session.commit()
 
 
-def check_password_complexity(password):
+def check_password_complexity(email, password):
     """
     Check that a password meets the minimum complexity requirements, returning True if the
     requirements are met, False otherwise.
 
+    :param email: the input email address
     :param password: the input plain-text password
     :return: boolean
     """
+    username_check = check_consecutive_letters(email, password)
+    length_check = len(password) >= 13
+    uppercase_check = re.search(r"[A-Z]", password) is not None
+    numeric_check = re.search(r"\d", password) is not None
+    lowercase_check = re.search(r"[a-z]", password) is not None
+    symbol_check = re.search(r"[!=;:?>@<#$%&'()*+,-./[\\\]^_`{|}~+']", password)
 
-    length_check = False
-    symbol_check = False
+    return length_check and uppercase_check and numeric_check and lowercase_check and symbol_check and username_check
 
-    #Check if the password is long enough
-    if len(password) >= 8:
-        length_check = True
+def check_consecutive_letters(email, password):
+    """
+    Check that the password does not contain more than 3 consecutive letters that are present in the email address
 
-    #Check if the password has an Uppercase letter
-    uppercase_check = re.search(r"[A-Z]", password)
-
-    #Check if the password has numbers
-    numeric_check = re.search(r"\d", password)
-
-    #Check if the password has lowercase letter
-    lowercase_check = re.search(r"[a-z]", password)
-
-    #Check for symbols
-    if re.search(r"[!=;:?>@<#$%&'()*+,-./[\\\]^_`{|}~+']", password):
-        symbol_check = True
-
-    if (length_check and uppercase_check and numeric_check and lowercase_check and symbol_check):
-        return True
-    else:
-        return False
+    :param email: the input email address
+    :param password: the input plain-text password
+    :return: boolean
+    """
+    for i in range(0, int(len(email)), 1):
+        return ((False if(password.lower().find(email[i:(i+3)]) != -1) else True) if (i < (len(email) - 1)) else False)
+    return True
