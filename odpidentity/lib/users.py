@@ -232,7 +232,7 @@ def check_password_complexity(email, password):
     """
     Check that a password meets the minimum complexity requirements, returning True if the
     requirements are met, False otherwise.
-
+    ​
     :param email: the input email address
     :param password: the input plain-text password
     :return: boolean
@@ -242,18 +242,20 @@ def check_password_complexity(email, password):
     uppercase_check = re.search(r"[A-Z]", password) is not None
     numeric_check = re.search(r"\d", password) is not None
     lowercase_check = re.search(r"[a-z]", password) is not None
-    symbol_check = re.search(r"[!=;:?>@<#$%&'()*+,-./[\\\]^_`{|}~+']", password)
+    symbol_check = re.search(r"[!=;:?>@<#$%&'()*+,-./[\\\]^_`{|}~]", password) is not None
 
     return length_check and uppercase_check and numeric_check and lowercase_check and symbol_check and username_check
+
 
 def check_consecutive_letters(email, password):
     """
     Check that the password does not contain more than 3 consecutive letters that are present in the email address
-
+​
     :param email: the input email address
     :param password: the input plain-text password
     :return: boolean
     """
-    for i in range(0, int(len(email)), 1):
-        return ((False if(password.lower().find(email[i:(i+3)]) != -1) else True) if (i < (len(email) - 1)) else False)
+    for i in range(int(len(email)) - 1):
+        if email[i:(i + 3)] in password.lower():
+            return False
     return True
