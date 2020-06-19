@@ -255,7 +255,7 @@ def check_consecutive_letters(email, password):
     :param password: the input plain-text password
     :return: boolean
     """
-    for i in range(int(len(email)) - 1):
+    for i in range(int(len(email)) - 2):
         if email[i:(i + 3)] in password.lower():
             return False
     return True
