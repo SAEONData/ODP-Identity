@@ -230,8 +230,7 @@ def update_user_password(user, password):
 
 def check_password_complexity(email, password):
     """
-    Check that a password meets the minimum complexity requirements, returning True if the
-    requirements are met, False otherwise.
+    Check that a password meets the minimum complexity requirements.
     ​
     :param email: the input email address
     :param password: the input plain-text password
@@ -249,7 +248,7 @@ def check_password_complexity(email, password):
 
 def check_consecutive_letters(email, password):
     """
-    Check that the password does not contain more than 3 consecutive letters that are present in the email address
+    Check that the password does not contain 2 or more consecutive letters that are present in the email address
 ​
     :param email: the input email address
     :param password: the input plain-text password
