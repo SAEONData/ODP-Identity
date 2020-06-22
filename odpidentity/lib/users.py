@@ -248,7 +248,7 @@ def check_password_complexity(email, password):
 
 def check_consecutive_letters(email, password):
     """
-    Check that the password does not contain 2 or more consecutive letters that are present in the email address
+    Check that the password does not contain more than 2 consecutive letters that are present in the email address
 ​
     :param email: the input email address
     :param password: the input plain-text password
