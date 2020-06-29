@@ -1,5 +1,7 @@
 # ODP Identity Service
 
+***This project has been merged into [Open-Data-Platform](https://github.com/SAEONData/Open-Data-Platform).***
+
 The SAEON Open Data Platform (ODP) consists of a diverse array of loosely coupled web applications and services.
 The ODP Identity Service is intended to provide a unified user registration and sign-on experience across the
 entire platform.
