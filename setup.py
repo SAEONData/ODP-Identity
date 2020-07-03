@@ -12,7 +12,7 @@ setup(
     license='MIT',
     packages=find_packages(),
     include_package_data=True,
-    python_requires='~=3.6',
+    python_requires='~=3.8',
     install_requires=[
         'flask',
         'flask-login',
@@ -24,7 +24,7 @@ setup(
         'argon2_cffi',
     ],
     extras_require={
-        'test': ['pytest', 'coverage']
+        'test': ['pytest', 'pytest-cov']
     },
     dependency_links=[
         'git+https://github.com/SAEONData/ODP-AccountsLib.git#egg=ODP_AccountsLib',
